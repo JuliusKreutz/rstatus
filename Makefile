@@ -6,3 +6,6 @@ clean:
 
 install:
 	cp -f target/release/rstatus /usr/local/bin/
+
+uninstall:
+	rm /usr/local/bin/rstatus
