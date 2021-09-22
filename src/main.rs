@@ -9,7 +9,7 @@ fn main() {
         .root();
 
     loop {
-        let status = format!("{}", chrono::Utc::now().format("%a %d/%m/%Y %T"));
+        let status = format!("{}", chrono::Local::now().format("%a %d/%m/%Y %T"));
 
         let c_string = std::ffi::CString::new(status).unwrap();
 
