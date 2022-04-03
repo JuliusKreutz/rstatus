@@ -1,5 +1,3 @@
-cargo-features = ["strip"]
-
 [package]
 name = "rstatus"
 version = "1.0.0"
@@ -12,9 +10,9 @@ repository = "https://github.com/JuliusKreutz/rstatus"
 
 [profile.release]
 lto = true
-strip = "symbols"
+strip = true
 panic = "abort"
 
 [dependencies]
-xcb = "0.10.1"
+xcb = "1.1.1"
 chrono = "0.4.19"

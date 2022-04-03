@@ -1,3 +1,5 @@
+use xcb::x;
+
 fn main() {
     let (connection, screen_num) = xcb::Connection::connect(None).unwrap();
 
@@ -11,19 +13,15 @@ fn main() {
     loop {
         let status = format!("{}", chrono::Local::now().format("%a %d/%m/%Y %T"));
 
-        let c_string = std::ffi::CString::new(status).unwrap();
+        connection.send_request(&x::ChangeProperty {
+            mode: x::PropMode::Replace,
+            window: root,
+            property: x::ATOM_WM_NAME,
+            r#type: x::ATOM_STRING,
+            data: status.as_bytes(),
+        });
 
-        xcb::change_property(
-            &connection,
-            xcb::PROP_MODE_REPLACE as u8,
-            root,
-            xcb::ATOM_WM_NAME,
-            xcb::ATOM_STRING,
-            8,
-            c_string.as_bytes(),
-        );
-
-        connection.flush();
+        connection.flush().unwrap();
         std::thread::sleep(std::time::Duration::from_secs(1));
     }
 }
